@@ -1,264 +1,758 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <style>
-    body, html{
-        height: 100%;
-    }
-    .timeCounter {
-        text-transform: uppercase;
-    }
-    .DropdownArrow{
-      position:absolute;
-      right: 0;
-      top:0;
-    }
-    .dropDownList {
-  max-height: 200px;
-  overflow-y: auto;
-}
-    .activeLi{
-      color:red;
-    }
-
-    .dropDownList {
-  max-height: 200px;
-  overflow-y: auto;
-  position: absolute;
-  z-index: 1000;
-  background: #fff;
-  width: 100%;
-  border: 1px solid #ccc;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.dropDownList li {
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.dropDownList li:hover,
-.dropDownList .activeLi {
-  background-color: #007bff;
-  color: #fff;
-}
-
- input:focus-visible
- {
-    outline: none;
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shubham Jaiswal | Senior Game Developer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@8.x/dist/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
+    <canvas id="bg-canvas"></canvas>
 
-<div class="row m-0">
-  <div class="col-md-3">
-    <div class="customDropDown position-relative">
-      <input type="text" id="startTime" value="12:00am" class="w-100"/>
-      <ul class="dropDownList" style="visibility: hidden;" id="startTimeList">
-    <li>12:00am</li>
-    <li>12:15am</li>
-    <li>12:30am</li>
-    <li>12:45am</li>
-    <li>1:00am</li>
-    <li>1:15am</li>
-    <li>1:30am</li>
-    <li>1:45am</li>
-    <li>2:00am</li>
-    <li>2:15am</li>
-    <li>2:30am</li>
-    <li>2:45am</li>
-    <li>3:00am</li>
-    <li>3:15am</li>
-    <li class="activeLi">3:30am</li>
-    <li>3:45am</li>
-    <li>4:00am</li>
-    <li>4:15am</li>
-    <li>4:30am</li>
-    <li>4:45am</li>
-    <li>5:00am</li>
-    <li>5:15am</li>
-    <li>5:30am</li>
-    <li>5:45am</li>
-    <li>6:00am</li>
-    <li>6:15am</li>
-    <li>6:30am</li>
-    <li>6:45am</li>
-    <li>7:00am</li>
-    <li>7:15am</li>
-    <li>7:30am</li>
-    <li>7:45am</li>
-    <li>8:00am</li>
-    <li>8:15am</li>
-    <li>8:30am</li>
-    <li>8:45am</li>
-    <li>9:00am</li>
-    <li>9:15am</li>
-    <li>9:30am</li>
-    <li>9:45am</li>
-    <li>10:00am</li>
-    <li>10:15am</li>
-    <li>10:30am</li>
-    <li>10:45am</li>
-    <li>11:00am</li>
-    <li>11:15am</li>
-    <li>11:30am</li>
-    <li>11:45am</li>
-    <li>12:00pm</li>
-    <li>12:15pm</li>
-    <li>12:30pm</li>
-    <li>12:45pm</li>
-    <li>1:00pm</li>
-    <li>1:15pm</li>
-    <li>1:30pm</li>
-    <li>1:45pm</li>
-    <li>2:00pm</li>
-    <li>2:15pm</li>
-    <li>2:30pm</li>
-    <li>2:45pm</li>
-    <li>3:00pm</li>
-    <li>3:15pm</li>
-    <li>3:30pm</li>
-    <li>3:45pm</li>
-    <li>4:00pm</li>
-    <li>4:15pm</li>
-    <li>4:30pm</li>
-    <li>4:45pm</li>
-    <li>5:00pm</li>
-    <li>5:15pm</li>
-    <li>5:30pm</li>
-    <li>5:45pm</li>
-    <li>6:00pm</li>
-    <li>6:15pm</li>
-    <li>6:30pm</li>
-    <li>6:45pm</li>
-    <li>7:00pm</li>
-    <li>7:15pm</li>
-    <li>7:30pm</li>
-    <li>7:45pm</li>
-    <li>8:00pm</li>
-    <li>8:15pm</li>
-    <li>8:30pm</li>
-    <li>8:45pm</li>
-    <li>9:00pm</li>
-    <li>9:15pm</li>
-    <li>9:30pm</li>
-    <li>9:45pm</li>
-    <li>10:00pm</li>
-    <li>10:15pm</li>
-    <li>10:30pm</li>
-    <li>10:45pm</li>
-    <li>11:00pm</li>
-    <li>11:15pm</li>
-    <li>11:30pm</li>
-    <li>11:45pm</li>
-</ul>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="customDropDown position-relative">
-      <input type="text" id="EndTime" class="w-100" />
-      <ul class="dropDownList" style="visibility: hidden;" id="endTimeList">
-      </ul>
-    </div>
-  </div>
+    <div class="container">
+        <header>
+            <div class="hero-text">
+                <h1 class="hero-name">Shubham Jaiswal</h1>
+                <!-- <div class="hero-subtitle">
+                    Senior Software Engineer | <span class="highlight">PixiJS v8 Specialist</span><br>
+                    Building High-Performance Slot & Casino Games.
+                </div> -->
+                <div class="hero-subtitle">
+                    <span id="typing-text" class="highlight"></span>
+                    <span style="color: var(--neon-blue); font-size: 1.2rem; margin-left: 10px;">
+                        📍 Noida, India
+                    </span> <br>
+                    <!-- <div class="specialization-container">
+                        <span class="spec-tag">🎰 Slot Games</span>
+                        <span class="spec-tag">💎 Progressive Jackpots</span>
+                        <span class="spec-tag">⚙️ RNG Integration</span>
+                        <span class="spec-tag">💻 .NET Management</span>
+                    </div> -->
+                </div>
+                <div class="about-brief">
+                    <p>Senior Software Engineer with 4 years of experience in the gaming industry specializing in
+                        high-performance 2D games and logic-driven gameplay.I have successfully developed 20+ Slot Games
+                        using PixiJS, Proven ability to handle multiple
+                        assignments and excel in fast-paced, time-sensitive environments while maintaining high
+                        standards of quality. Possess a deep understanding of Game Trends, Design, Prototyping, and
+                        complex Logic Development.</br>
+
+                        A proactive learner motivated to grow within the Game Development industry, I bring excellent
+                        teamwork skills, flexibility, and the ability to work effectively both independently and in
+                        collaborative team settings to achieve project goals.
+
+                        .</p>
+                </div>
+                <div class="btn-group">
+                    <a href="#projects" class="btn cta-btn">View Games</a>
+                    <button onclick="openSkills()" class="btn skills-btn">Show Skills 🛠️</button>
+                    <button onclick="openExperience()" class="btn exp-btn">Experience 💼</button>
+                    <button onclick="openContact()" class="btn skills-btn">Contact Me ✉️</button>
+                    <button onclick="openEducation()" class="btn resume-btn">Education 🎓</button>
+                    <a href="./src/Resume/Shubham_Jaiswal_PixiJs_Resume.pdf" download class="btn resume-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        Download Resume
+                    </a>
+                </div>
+                <div id="educationModal" class="modal">
+                    <div class="modal-content" style="max-width: 600px;">
+                        <div class="modal-header">
+                            <h2>Academic Background</h2>
+                            <span class="close-btn" onclick="closeEducation()">&times;</span>
+                        </div>
+
+                        <div class="modal-body education-body">
+                            <div class="edu-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">Master of Computer Applications (MCA)</h3>
+                                    <span class="duration">2022 - 2024</span>
+                                </div>
+                                <div class="company-name">Indira Gandhi National Open University, Maidan Garhi, New
+                                    Delhi,110068.</div>
+                                <!-- <p style="color: #bbb; margin-top: 5px;">University Department / Affiliated College Name Yahan Dalein</p> -->
+                            </div>
+
+                            <div class="edu-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">Bachelor of Computer Applications (BCA)</h3>
+                                    <span class="duration">2018 - 2021</span>
+                                </div>
+                                <div class="company-name">Ram Manohar Lohia Awadh University Ayodhya, U.P</div>
+                                <p style="color: #bbb; margin-top: 5px;">Affiliated College: RRPG College Amethi</p>
+                            </div>
+
+                            <div class="edu-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">Intermediate (12th) - Science Stream</h3>
+                                    <span class="duration">2016 - 2018</span>
+                                </div>
+                                <div class="company-name">S J B Singh Inter Collge Kakwa Amethi | UP Board</div>
+                                <p style="color: #bbb; margin-top: 5px;">Focused on Physics, Chemistry and Mathematics.
+                                </p>
+                            </div>
+
+                            <div class="edu-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">High School (10th)</h3>
+                                    <span class="duration">2016</span>
+                                </div>
+                                <div class="company-name">S J B Singh Inter Collge Kakwa Amethi | UP Board</div>
+                                <p style="color: #bbb; margin-top: 5px;">Foundational Science and Mathematics.</p>
+                            </div>
+                        </div>
+                        <!-- <div class="modal-body education-body">
+                            <div class="edu-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">Bachelor of Computer Applications (BCA)</h3>
+                                    <span class="duration">2018 - 2021</span>
+                                </div>
+                                <div class="company-name">Mahatma Gandhi Kashi Vidyapith (MGKVP)</div>
+                                <p style="color: #bbb; margin-top: 5px;">Focused on Software Engineering, Data
+                                    Structures, and Web Technologies.</p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div id="experienceModal" class="modal">
+                    <div class="modal-content" style="max-width: 800px;">
+                        <div class="modal-header">
+                            <h2>Work Experience</h2>
+                            <span class="close-btn" onclick="closeExperience()">&times;</span>
+                        </div>
+                        <div class="modal-body exp-body">
+                            <div class="exp-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">Senior Software Engineer</h3>
+                                    <span class="duration">August 2024 - Present</span>
+                                </div>
+                                <div class="company-name">Chetu Inc, Noida</div>
+                                <!-- <div class="tech-stack-mini">
+                                    <div class="bar-label">PixiJS Optimization <span>95%</span></div>
+                                    <div class="progress-bg">
+                                        <div class="progress-fill" style="width: 95%;"></div>
+                                    </div>
+
+                                    <div class="bar-label">Game Logic (JS/C#) <span>90%</span></div>
+                                    <div class="progress-bg">
+                                        <div class="progress-fill" style="width: 90%;"></div>
+                                    </div>
+                                </div> -->
+                                <ul class="exp-roles">
+                                    <li>Developed Interactive 2D game and create game Lobby in Pixi JS for Hosting Games
+                                        and Integrated Routing. </li>
+                                    <li>Developed games i.e. Voodoo jackpot, Dinosaur cash, Utah Fortune, Supreme
+                                        Treasure, Yucatan Quest, ApeEmperor, Purple Nation, Bahama Rock, Panda Quest,
+                                        Talisman and
+                                        Hillside Manor game.</li>
+                                    <li>Collaborated with QA, designers, and backend engineers to integrate APIs and
+                                        real-time data, ensuring seamless synchronization across devices.</li>
+                                    <li>Implemented responsive design and adaptive layouts, improving accessibility and
+                                        gameplay consistency on both desktop and mobile platforms.</li>
+                                    <li>Demonstrated project progress to clients and project managers on a weekly basis,
+                                        ensuring alignment with project goals.</li>
+
+                                    <li>Optimized game performance by refining rendering pipelines and asset loading,
+                                        resulting in faster load times and smoother gameplay.</li>
+
+                                    <li>Collaborated with the GLI (Gaming Laboratories International) Team and clients
+                                        to achieve formal Game Certification.</li>
+
+                                    <li>Successfully integrated 52 legacy games into a newly developed, unified Game
+                                        Lobby.</li>
+
+                                    <li>Developed advanced gameplay features such as Free Spins, Blasting Reels, and
+                                        Blazing Reels.</li>
+
+                                    <li>Engineered complex mechanics including Sticky Wilds, Falling Wild Re-Spins, and
+                                        various Bonus Game features.</li>
+
+                                    <li>Integrated Sprite Sheet and Spine Animations seamlessly to enhance visual
+                                        fidelity and performance.</li>
+
+                                    <li>Debugged and resolved critical rendering and logic issues, significantly
+                                        reducing player-reported bugs during testing phases.</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">Software Engineer</h3>
+                                    <span class="duration">Feb 2022 -July 2024 </span>
+                                </div>
+                                <div class="company-name">Chetu Inc</div>
+                                <!-- <div class="tech-stack-mini">
+                                    <div class="bar-label">PixiJS Optimization <span>95%</span></div>
+                                    <div class="progress-bg">
+                                        <div class="progress-fill" style="width: 95%;"></div>
+                                    </div>
+
+                                    <div class="bar-label">Game Logic (JS/C#) <span>90%</span></div>
+                                    <div class="progress-bg">
+                                        <div class="progress-fill" style="width: 90%;"></div>
+                                    </div>
+                                </div> -->
+                                <ul class="exp-roles">
+                                    <li>Developed a robust Math Engine for 10 Sweepstake games, handling complex
+                                        probability calculations and payout structures.</li>
+
+                                    <li>Engineered a Console Application to simulate and verify Return to Player (RTP)
+                                        percentages, ensuring mathematical accuracy for 10 distinct game titles.</li>
+
+                                    <li>Developed interactive 2D game interfaces and animations using PixiJS,
+                                        significantly enhancing visual engagement and player experience.</li>
+
+                                    <li>Built 10 high-performance 2D slot games from scratch using PixiJS, JavaScript,
+                                        and HTML5/CSS3.</li>
+
+                                    <li>Engineered complex mechanics such as Fever-Re-spin, Sticky Wilds, Falling Wild
+                                        Re-Spins, and Diamond Multipliers.</li>
+
+                                    <li>Implemented advanced game logic including Ways Selection, Jackpot Selection, and
+                                        various interactive Bonus Wheel features.</li>
+
+                                    <li>Initiated early defect detection during the design and build phases through
+                                        proactive risk analysis, reducing overall project costs.</li>
+
+                                    <li>Performed comprehensive root cause analysis of defects in pre-production
+                                        environments to prevent bug propagation.</li>
+
+                                    <li>Developed and integrated "Community Jackpot" features to enhance player social
+                                        interaction and retention.</li>
+
+                                    <li>Collaborated with cross-functional teams to gather, analyze, and implement
+                                        complex client requirements effectively.</li>
+
+                                    <li>Executed clean, efficient, and maintainable code following industry best
+                                        practices for PixiJS and JavaScript development.</li>
+
+                                    <li>Performed rigorous unit testing and debugging to ensure optimal software
+                                        performance and maximum rendering optimization.</li>
+
+                                    <li>Participated in peer code reviews to maintain high code quality standards and
+                                        identify architectural improvements.</li>
+
+                                    <li>Integrated RESTful APIs and parsed complex data responses to dynamically
+                                        manipulate and display real-time game data on the front end.</li>
+
+
+                                    <li>Developed a comprehensive Game Management Portal to manage the complete business
+                                        hierarchy, including Owner, Admin, Distributor, Agent, and Store levels.</li>
+
+                                    <li>Engineered features to dynamically enable/disable games at the store level and
+                                        integrated a Weekly Purchase Limit feature using .NET MVC for better financial
+                                        control.</li>
+
+                                    <li>Built and maintained a POS (Point of Sale) Application to manage game reports,
+                                        player history, cashier transactions, and real-time financial tracking.</li>
+
+                                    <li>Implemented essential cashier features including creating mobile IDs and PINs
+                                        for new customers, adding play-credits, and processing amount redemptions.</li>
+
+                                    <li>Developed operational tools within the POS system such as Shift Reports, and
+                                        functionalities to add or edit store configurations seamlessly.</li>
+                                </ul>
+                            </div>
+
+                            <div class="exp-item">
+                                <div class="exp-header">
+                                    <h3 class="highlight">Trainee</h3>
+                                    <span class="duration">Dec 2021 - Jan 2022</span>
+                                </div>
+                                <div class="company-name">Chetu Inc, Noida</div>
+                                <!-- <div class="tech-stack-mini">
+                                    <div class="bar-label">PixiJS Optimization <span>95%</span></div>
+                                    <div class="progress-bg">
+                                        <div class="progress-fill" style="width: 95%;"></div>
+                                    </div>
+
+                                    <div class="bar-label">Game Logic (JS/C#) <span>90%</span></div>
+                                    <div class="progress-bg">
+                                        <div class="progress-fill" style="width: 90%;"></div>
+                                    </div>
+                                </div> -->
+                                <ul class="exp-roles">
+                                    <li>Gained foundational expertise in C#, .NET Core, and SQL Server, focusing on
+                                        building scalable backend logic and efficient database schemas.</li>
+
+                                    <li>Mastered JavaScript and PixiJS fundamentals to develop interactive 2D practice
+                                        projects, including sprite movement and basic animation cycles.</li>
+
+                                    <li>Engineered initial practice prototypes of Slot Games, implementing core
+                                        mechanics like reel spinning, symbol positioning, and basic payout logic.</li>
+
+                                    <li>Developed proficiency in HTML5 Canvas rendering and asset management, ensuring
+                                        smooth gameplay performance on web browsers.</li>
+
+                                    <li>Learned to write clean, maintainable code through structured training modules
+                                        and peer code reviews.</li>
+
+                                    <li>Explored SQL Server integration for game data storage, focus on understanding
+                                        relational data management and query optimization.</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-img-container">
+                <div class="glow-ring"></div>
+                <img src="./src/assets/pic.avif" alt="Shubham Profile" class="profile-pic">
+            </div>
+        </header>
+
+        <div id="skillsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>TECHNICAL SKILLS</h2>
+                    <span class="close-btn" onclick="closeSkills()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="skill-category">
+                        <!-- <h3>Core Tech</h3> -->
+                        <div class="skill-list"><span class="skill-tag">PixiJS</span>
+                            <span class="skill-tag">JavaScript</span><span class="skill-tag">Html</span>
+                            <span class="skill-tag">CSS</span><span class="skill-tag">GSAP</span>
+                            <span class="skill-tag">.Net core</span>
+                            <span class="skill-tag">MS-SQL Server</span><span class="skill-tag">HTML5 Canvas</span>
+                            <span class="skill-tag">REST API Integration</span><span class="skill-tag">CI/CD</span>
+                            <span class="skill-tag">Postman</span><span class="skill-tag">Cross-platform
+                                development</span>
+                            <span class="skill-tag">Game performance optimization</span><span
+                                class="skill-tag">Multitasking</span>
+                            <span class="skill-tag">Problem Solving</span><span class="skill-tag">Communication</span>
+                            <span class="skill-tag">Team collaboration</span><span class="skill-tag">WebGL</span>
+                            <span class="skill-tag">C#</span><span class="skill-tag">Slot Logic</span>
+                            <span class="skill-tag">TFS</span><span class="skill-tag">Git</span>
+                            <span class="skill-tag">SVN</span><span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Visual Studio</span><span class="skill-tag">VS Code</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <button onclick="openSlotGame()" class="btn cta-btn">Play Slot Demo 🎰</button> -->
+
+        <div id="slotModal" class="modal">
+            <div class="modal-content" style="max-width: 900px; background: #000;">
+                <div class="modal-header">
+                    <h2>PixiJS v8 Slot Engine</h2>
+                    <span class="close-btn" onclick="closeSlotGame()">&times;</span>
+                </div>
+                <div id="slot-container" style="width: 100%; height: 500px; position: relative;">
+                    <div id="slot-ui" style="position: absolute; bottom: 20px; width: 100%; text-align: center;">
+                        <button id="spinBtn" class="view-all-btn">SPIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="projects">Featured Portfolio for Games</h2>
+        <div class="grid">
+            <div class="card" onclick="openGame()">
+                <div class="card-img" style="position:relative;">
+                    <div
+                        style="position:absolute; top:10px; left:10px; background:var(--accent); color:white; padding:5px 10px; border-radius:5px; font-weight:bold; z-index:5;">
+                        PLAY NOW</div>
+                    <img src="./src/assets/bubbleshooter.jpg" alt="Bubble Master">
+                </div>
+                <div class="card-content">
+                    <h3>Bubble Master</h3>
+                    <p>Interactive Hexagonal shooter. Click to play the live demo!</p>
+                    <div class="tags-container"><span class="tag gold">Canvas API</span><span class="tag">Game
+                            Logic</span></div>
+                </div>
+            </div>
+
+            <div id="gameModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 style="color:var(--accent)">Bubble Master Live Demo</h2>
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <button id="muteBtn" onclick="toggleMute()" class="game-btn"
+                                style="background: #555; padding: 5px 10px;">🔊 Mute</button>
+                            <span class="close-btn" onclick="closeGame()">&times;</span>
+                        </div>
+                    </div>
+                    <!-- <div class="modal-header">
+                <h2 style="color:var(--accent)">Bubble Master Live Demo</h2>
+                <span class="close-btn" onclick="closeGame()">&times;</span>
+                  </div> -->
+                    <div class="game-wrapper">
+                        <canvas id="gameCanvas" width="400" height="600"></canvas>
+                        <div class="ui-panel">
+                            <h3 style="margin:0">SCORE</h3>
+                            <div class="score-val" id="score">0</div>
+                            <div style="margin-top:20px">NEXT</div>
+                            <div id="next-bubble-preview"></div>
+                            <button class="game-btn" onclick="resetGame()">RESTART</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div id="bubbleModal" class="modal">
+                <div class="modal-content" style="max-width: 650px;">
+                    <div class="modal-header">
+                        <h2 style="color:var(--neon-blue)">Bubble Master</h2><span class="close-btn"
+                            onclick="closeGame()">&times;</span>
+                    </div>
+                    <div class="game-modal-body">
+                        <canvas id="gameCanvas" width="400" height="500"></canvas>
+                        <div class="game-sidebar">
+                            <div class="score-box">
+                                <div>SCORE</div>
+                                <div class="score-val" id="score">0</div>
+                            </div>
+                            <div>NEXT</div>
+                            <div id="next-bubble-preview"></div>
+                            <button class="restart-btn" onclick="openGame()">Restart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" onclick="playSpin(this)">
+                <div class="card-img"><img src="./src/assets/Lobby.png" loading="lazy"></div>
+                <div class="card-content">
+                    <h3>Lobby for Games</h3>
+                    <p>Developed lobby using pixijs , JavaScript, HTML ,css, show the game logo animation, player
+                        profile, transactions history,Social Media .
+
+</Html>.</p>
+<div class="tags-container"><span class="tag gold">PixiJS v4.5.5</span><span class="tag">JavaScript</span></div>
 </div>
 </div>
-<script>
- const startTimeinput = document.getElementById('startTime');
-  const dropdown = document.getElementById('startTimeList');
-  const listItems = dropdown.querySelectorAll('li');
-  let debounceTimer;
-//regex 
- const regexChar = /^[A-Za-z]+$/;
-const regex24hours = /^(2[5-9]|[3-9]\d|\d{3,})$/;
-const regex60min = /^(6[0-9]|[7-9][0-9]|\d{3,})$/; 
-const regexAMPMFormate = /^(1[0-2]|[1-9]):[0-5][0-9](am|pm)$/i;
-const start3Letters = /^[A-Za-z]{3}$/;
-const start5Letters = /^[A-Za-z]{4}$/;
-const regexDigitLength = /^\d{4}$/;
+<div class="card" onclick="playSpin(this)">
+    <div class="card-img"><img src="./src/assets/voodoo.png" loading="lazy"></div>
+    <div class="card-content">
+        <h3>Voodoo Jackpot</h3>
+        <p>High-volatility 5-reel slot.</p>
+    </div>
+</div>
+<div class="card" onclick="playSpin(this)">
+    <div class="card-img"><img src="./src/assets/ApeEmperor.png" loading="lazy"></div>
+    <div class="card-content">
+        <h3>Ape Emperor</h3>
+        <div class="feature-badges">
+            <span class="f-badge">🎰 5x3 Reel</span>
+            <span class="f-badge">🎁 Free Spins</span>
+            <span class="f-badge">💰 Multipliers</span>
+        </div>
+        <p>High-volatility slot with complex RNG logic and custom bonus wheels.</p>
+    </div>
+</div>
+<div class="card" onclick="playSpin(this)">
+    <div class="card-img"><img src="./src/assets/dinosaur.png" loading="lazy"></div>
+    <div class="card-content">
+        <h3>Dinosaur Cash</h3>
+        <div class="feature-badges">
+            <span class="f-badge">🎰 5x3 Reel</span>
+            <span class="f-badge">🎁 Free Spins</span>
+            <span class="f-badge">💰 Multipliers</span>
+        </div>
+        <p>High-volatility slot with complex RNG logic and custom bonus wheels.</p>
+    </div>
+</div>
+<div class="card" onclick="playSpin(this)">
+    <div class="card-img"><img src="./src/assets/goldencloepatra.png" loading="lazy"></div>
+    <div class="card-content">
+        <h3>Golden Cleopatra</h3>
+        <p>Optimized 3x3 mobile slot.</p>
+        <div class="tags-container">Tech Uesd<span class="tag gold" loading="lazy">PixiJS v4.5.5</span><span
+                class="tag">JavaScript</span></div>
+    </div>
+</div>
+</div>
 
-  // Function to set active based on input value
-  function setActiveFromInput() {
-   // debugger
-    const value = startTimeinput.value.trim().toLowerCase();
+<div id="hidden-games" style="display: none;">
+    <div class="grid" style="margin-top: 30px;">
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/supremeTreasure.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Supreme Treasure</h3>
+                <div class="feature-badges">
+                    <span class="f-badge">🎰 5x3 Reel</span>
+                    <span class="f-badge">🎁 Free Spins</span>
+                    <span class="f-badge">💰 Multipliers</span>
+                </div>
+                <p>High-volatility slot with complex RNG logic and custom bonus wheels.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Luckypanda.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Lucky Panda</h3>
+                <div class="feature-badges">
+                    <span class="f-badge">🎰 5x3 Reel</span>
+                    <span class="f-badge">🎁 Free Spins</span>
+                    <span class="f-badge">💰 Multipliers</span>
+                </div>
+                <p>High-volatility slot with complex RNG logic and custom bonus wheels.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/cracker (2).png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Cracker</h3>
+                <div class="feature-badges">
+                    <span class="f-badge">🎰 5x3 Reel</span>
+                    <span class="f-badge">🎁 Free Spins</span>
+                    <span class="f-badge">💰 Multipliers</span>
+                </div>
+                <p>High-volatility slot with complex RNG logic and custom bonus wheels.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Luxury.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Life of Luxury</h3>
+                <div class="feature-badges">
+                    <span class="f-badge">🎰 5x3 Reel</span>
+                    <span class="f-badge">🎁 Free Spins</span>
+                    <span class="f-badge">💰 Multipliers</span>
+                </div>
+                <p>High-volatility slot with complex RNG logic and custom bonus wheels.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Utah.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Utah Fortune</h3>
+                <div class="feature-badges">
+                    <span class="f-badge">🎰 5x3 Reel</span>
+                    <span class="f-badge">🎁 Free Spins</span>
+                    <span class="f-badge">💰 Multipliers</span>
+                </div>
+                <p>High-volatility slot with complex RNG logic and custom bonus wheels.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/prosperity.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Golden Prosperity</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Lucky Duck.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Lucky Duck</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/bigBonus.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Big Bonus</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Talishman.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Talishman</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/PurpleNation.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Purple Nation</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/HilsideManor.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Hillside Manor</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Screenshot 2025-12-17 214247.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Bahma Rock</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/PandaQuest.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Panda Quest</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Lucky Ducky.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Lucky Ducky</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/fortune.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Lucky Fortune</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/fortuneshamrock.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Fortune Shamrock</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img"><img src="./src/assets/Yucatanquest.png" loading="lazy"></div>
+            <div class="card-content">
+                <h3>Yucatan Quest</h3>
+            </div>
+        </div>
+    </div>
+</div>
 
-    listItems.forEach(li => {
-     //  debugger
-      if (li.innerHTML.trim().toLowerCase() === value) {
-        li.classList.add('activeLi');
-        // Scroll li to top of dropdown
-        dropdown.scrollTop = li.offsetTop;
-      } else {
-        li.classList.remove('activeLi');
-      }
-    });
-  }
+<div class="view-all-container"><button id="toggleBtn" class="view-all-btn" onclick="toggleGames()">View All Games
+        ▼</button></div>
+</div>
 
-  // On page load: set default active li
-  window.addEventListener('DOMContentLoaded', () => {
-    //debugger
-    setActiveFromInput();
-  });
+<footer class="footer-main">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h3>About Me</h3>
+            <p>Senior Software Engineer specializing in HTML5 Game Development. Experts in creating high-performance
+                casino and slot games using PixiJS, Spine, and GSAP.</p>
+        </div>
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="#">Back to Top</a></li>
+                <li><a href="https://chancesgames.com/">My Games</a></li>
+                <li><a onclick="openSkills()">Expertise</a></li>
+                <li><a href="./src/Resume/Shubham_Jaiswal_PixiJs_Resume.pdf" download>Resume</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Let's Connect</h3>
+            <p>Available for immediate joining and freelance projects.</p>
+            <div class="social-tray">
+                <a href="https://in.linkedin.com/in/shubham-jaiswal-29468b208" target="_blank" class="social-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                </a>
+                <a href="https://wa.me/919721288304" target="_blank" class="social-btn wa-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                    </svg>
+                </a>
 
-  // Show dropdown on input focus
-  startTimeinput.addEventListener('focusin', () => {
-    dropdown.style.visibility = 'visible';
-  });
+                <a href="https://wa.me/919721288304" class="float-wa" target="_blank" onclick="sounds.click.play()">
+                </a>
+                <a href="mailto:liveshubhamjaiswal@gmail.com" class="social-btn email-btn"
+                    onclick="sounds.click.play()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg>
+                </a>
 
-  // Hide dropdown after blur (with delay for click)
-  startTimeinput.addEventListener('focusout', () => {
-    setTimeout(() => {
-      dropdown.style.visibility = 'hidden';
-    }, 150);
-  });
+                <!-- 
+                <a href="https://www.instagram.com//" target="_blank" class="social-btn insta-btn"
+                    onclick="sounds.click.play()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.669-.072-4.948-.2-4.358-2.617-6.78-6.979-6.98-1.281-.058-1.69-.072-4.949-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                </a> -->
 
-  // Click on dropdown list item
-  dropdown.addEventListener('click', function (e) {
-    if (e.target.tagName === 'LI') {
-      const clickedItem = e.target;
-      startTimeinput.value = clickedItem.innerText;
+                <!-- <a href="https://www.facebook.com/profile.php?id=100024651500738" target="_blank"
+                    class="social-btn fb-btn" onclick="sounds.click.play()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.324v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                    </svg>
+                </a> -->
 
-      // Remove all active classes
-      listItems.forEach(li => li.classList.remove('activeLi'));
+                <a href="https://x.com/Shubham24139548" target="_blank" class="social-btn x-btn"
+                    onclick="sounds.click.play()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
 
-      // Add active to selected item
-      clickedItem.classList.add('activeLi');
+                <!-- <a href="https://www.youtube.com/@jaiswalshubham9721" target="_blank" class="social-btn yt-btn"
+                    onclick="sounds.click.play()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                </a> -->
 
-      // Scroll clicked item to top
-      dropdown.scrollTop = clickedItem.offsetTop;
+            </div>
+        </div>
+    </div>
+    <!-- <button onclick="openContact()" class="btn skills-btn">Contact Me ✉️</button> -->
 
-      // Hide dropdown
-      dropdown.style.visibility = 'hidden';
-    }
-  });
+    <div id="contactModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Send Message</h2>
+                <span class="close-btn" onclick="closeContact()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form action="https://formspree.io/f/mrezqkew" method="POST" id="contactForm">
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text" name="name" required placeholder="Enter your full name" class="form-input">
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required placeholder="Enter you email" class="form-input">
+                    </div>
+                    <div class="input-group">
+                        <label>Message</label>
+                        <textarea name="message" rows="4" required placeholder="How can I help you?"
+                            class="form-input"></textarea>
+                    </div>
+                    <button type="submit" class="btn cta-btn" style="width: 100%; margin-top: 10px;">Send Message
+                        🚀</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="successModal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center; padding: 30px;">
+            <div style="font-size: 50px; color: var(--neon-blue); margin-bottom: 20px;">✓</div>
+            <h2 style="color: var(--slot-gold);">Thank You!</h2>
+            <p>Your message has been sent to Shubham's inbox. 🚀</p>
+            <button onclick="closeSuccess()" class="btn cta-btn" style="margin-top: 20px;">Close</button>
+        </div>
+    </div>
 
-  startTimeinput.addEventListener("input", function () {
-    clearTimeout(debounceTimer);
-    
-    debounceTimer = setTimeout(() => {
-      // This function runs after typing stops for 500ms
-      handleInputDone(startTimeinput.value);
-    }, 800); // 500ms delay
-  });
+    <div class="footer-bottom">&copy; 2025 Shubham Jaiswal | Built with Passion for Gaming.</div>
+</footer>
 
-  function handleInputDone(value) {
-    debugger
-  var strFirstThree = value;
-		if (strFirstThree.substring(0, 3).match(  ) || (strFirstThree.length <= 2 && strFirstThree > 24) || Number(startTimeinput.value) > 2460 || strFirstThree.length >= 8 || (Number(startTimeinput.value.slice(-2)) > 60 && startTimeinput.value.length >= 3)) {
-			startTimeinput.style.border = "1px solid #FF0000";
-		} else {
-			startTimeinput.style.border = "1px solid";
-			const inputValue = startTimeinput.value;
-		}
-  }
-</script>
+<a href="https://wa.me/919721288304" class="float-wa" target="_blank">
+    <svg width="35" height="35" fill="white" viewBox="0 0 24 24">
+        <path
+            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+    </svg>
+</a>
+
+
+<!--     called my JavaScript files -->
+<script src="./main.js"></script>
+<script src="./education.js"></script>
+<script src="./contact.js"></script>
+
 </body>
+
 </html>
