@@ -97,7 +97,8 @@ header {
 
 .glow-ring {
     position: absolute;
-    width: 380px; /* Profile pic (350px) se thoda bada */
+    width: 380px;
+    /* Profile pic (350px) se thoda bada */
     height: 380px;
     border-radius: 50%;
     border: 3px dashed var(--neon-blue);
@@ -129,9 +130,17 @@ header {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
+
 .profile-pic {
     width: 350px;
     height: 350px;
@@ -233,7 +242,8 @@ header {
 .modal {
     display: none;
     position: fixed;
-    z-index: 2000;
+    /* z-index: 2000; */
+    z-index: 10000 !important;
     left: 0;
     top: 0;
     width: 100%;
@@ -336,12 +346,12 @@ header {
 }
 
 
-#gameCanvas {
+/* #gameCanvas {
     background: #222;
     border-radius: 8px;
     cursor: crosshair;
     border: 4px solid #1a1a1a;
-}
+} */
 
 /* --- 4. PROJECT GRID --- */
 .section-title {
@@ -371,11 +381,11 @@ header {
     cursor: pointer;
 }
 
-.card:hover {
+/* .card:hover {
     transform: translateY(-10px);
     border-color: var(--slot-gold);
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-}
+} */
 
 .card-img {
     height: 200px;
@@ -576,7 +586,7 @@ header {
     color: #555;
 }
 
-.float-wa {
+#float-wa {
     position: fixed;
     width: 60px;
     height: 60px;
@@ -664,51 +674,164 @@ header {
 
 /* ----------------------------------------------------------------------------------------------------------------------------- */
 /* --- 1. GLOBAL STYLES & CASINO THEME --- */
-        
 
-        body { 
-            margin: 0; overflow-x: hidden; background: var(--bg-dark); 
-            color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        }
 
-        canvas#bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none;}
-        .container { position: relative; max-width: 1200px; margin: 0 auto; padding: 20px; z-index: 10; }
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--bg-dark);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        /* --- 2. HEADER SECTION --- */
-        header { 
-            min-height: 90vh; display: flex; flex-direction: row; 
-            justify-content: space-between; align-items: center; padding-top: 20px;
-        }
-        .hero-text { flex: 1; padding-right: 20px; z-index: 2; }
-        .hero-name { 
-            font-size: 5.5rem; margin: 0; font-weight: 800;
-            background: linear-gradient(to right, var(--neon-purple) 0%, var(--neon-blue) 100%); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.3));
-            opacity: 0; transform: translateY(50px); animation: slideUpFade 0.8s ease-out forwards;
-        }
-        .hero-subtitle {
-            font-size: 1.6rem; color: #e0e0e0; margin-top: 10px; line-height: 1.4;
-            opacity: 0; transform: translateY(30px); animation: slideUpFade 0.8s ease-out 0.2s forwards;
-        }
-        .highlight { color: var(--slot-gold); font-weight: bold; }
-        .hero-img-container { flex: 0 0 400px; display: flex; justify-content: flex-end; align-items: center; opacity: 0; animation: fadeIn 1.5s ease-out 0.5s forwards; padding-left: 40px; }
-        .profile-pic { width: 350px; height: 350px; border-radius: 50%; object-fit: cover; border: 4px solid var(--neon-blue); box-shadow: 0 0 30px rgba(0, 242, 254, 0.3); animation: float 6s ease-in-out infinite; }
 
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
 
-        
-        
-        /* --- BUBBLE GAME UI INSIDE MODAL --- */
-        .game-wrapper { display: flex; flex-direction: row; gap: 10px; padding: 20px; background: #34495e; border-radius: 0 0 15px 15px; justify-content: center; align-items: flex-start; flex-wrap: wrap; }
-        #gameCanvas { background: #222; border-radius: 4px; cursor: crosshair; max-width: 100%; height: auto; border: 3px solid #111; }
-        .ui-panel { width: 180px; background: var(--panel-bg); padding: 15px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; color: #333; }
-        .score-box { background: #fff; padding: 10px; border-radius: 8px; width: 100%; margin-bottom: 15px; text-align: center; }
-        .score-val { font-size: 24px; font-weight: bold; color: var(--accent); }
-        #next-bubble-preview { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ccc; margin: 10px 0;}
-        .game-btn { padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
-    /* Email Button Hover Color */
+/* --- 2. HEADER SECTION --- */
+header {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.hero-text {
+    flex: 1;
+    padding-right: 20px;
+    z-index: 2;
+}
+
+.hero-name {
+    font-size: 5.5rem;
+    margin: 0;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--neon-purple) 0%, var(--neon-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.3));
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideUpFade 0.8s ease-out forwards;
+}
+
+.hero-subtitle {
+    font-size: 1.6rem;
+    color: #e0e0e0;
+    margin-top: 10px;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUpFade 0.8s ease-out 0.2s forwards;
+}
+
+.highlight {
+    color: var(--slot-gold);
+    font-weight: bold;
+}
+
+.hero-img-container {
+    flex: 0 0 400px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out 0.5s forwards;
+    padding-left: 40px;
+}
+
+.profile-pic {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--neon-blue);
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+
+
+/* --- BUBBLE GAME UI INSIDE MODAL --- */
+.game-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 20px;
+    background: #34495e;
+    border-radius: 0 0 15px 15px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+/* 
+#gameCanvas {
+    background: #222;
+    border-radius: 4px;
+    cursor: crosshair;
+    max-width: 100%;
+    height: auto;
+    border: 3px solid #111;
+} */
+
+.ui-panel {
+    width: 180px;
+    background: var(--panel-bg);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+}
+
+.score-box {
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.score-val {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+#next-bubble-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    margin: 10px 0;
+}
+
+.game-btn {
+    padding: 10px 20px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Email Button Hover Color */
 .social-btn.email-btn:hover {
     border-color: #ea4335;
     box-shadow: 0 0 15px rgba(234, 67, 53, 0.3);
@@ -723,69 +846,40 @@ header {
     border-color: #e4405f;
     box-shadow: 0 0 15px rgba(228, 64, 95, 0.4);
 }
-.social-btn.insta-btn:hover svg { fill: #e4405f; }
+
+.social-btn.insta-btn:hover svg {
+    fill: #e4405f;
+}
 
 /* Facebook Hover */
 .social-btn.fb-btn:hover {
     border-color: #1877f2;
     box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
 }
-.social-btn.fb-btn:hover svg { fill: #1877f2; }
+
+.social-btn.fb-btn:hover svg {
+    fill: #1877f2;
+}
 
 /* Twitter (X) Hover */
 .social-btn.x-btn:hover {
     border-color: #ffffff;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
-.social-btn.x-btn:hover svg { fill: #ffffff; }
+
+.social-btn.x-btn:hover svg {
+    fill: #ffffff;
+}
 
 /* YouTube Hover */
 .social-btn.yt-btn:hover {
     border-color: #ff0000;
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
 }
-.social-btn.yt-btn:hover svg { fill: #ff0000; }
 
-
-        /* Email Floating Button Style 
-.float-email {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 100px; /* Isse WhatsApp ke upar rakhne ke liye distance badhaya hai 
-    right: 30px;
-    background-color: #ea4335; /* Gmail Red Color */
-    /* color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    box-shadow: 2px 2px 3px #999;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: 0.3s;
+.social-btn.yt-btn:hover svg {
+    fill: #ff0000;
 }
-
-.float-email:hover {
-    transform: scale(1.1);
-    background-color: #c5221f;
-} */
-
-/* Optional: Email pulse animation (Green ki jagah Red) */
-/* .float-email {
-    animation: pulse-red 2s infinite;
-}
-
-@keyframes pulse-red {
-    0% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(234, 67, 53, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
-} */
-
-
-
-
 
 
 
@@ -859,32 +953,36 @@ header {
 }
 
 
-
-
-
-
-
-
-
-.tech-stack-mini { margin-top: 15px; }
-.bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--neon-blue); margin-bottom: 4px; }
-.progress-bg { background: rgba(255,255,255,0.1); height: 6px; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
-.progress-fill { 
-    background: linear-gradient(to right, var(--neon-purple), var(--neon-blue)); 
-    height: 100%; 
-    box-shadow: 0 0 10px var(--neon-blue);
-    transition: width 1.5s ease-in-out;
+.company-logo-box {
+    width: 50px;
+    height: 50px;
+    background: var(--neon-blue);
+    color: black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 0 0 15px var(--neon-blue);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
 }
 
-/* Mobile par custom cursor hide karein */
-@media (max-width: 900px) {
-    body { cursor: auto !important; }
-    #custom-cursor { display: none !important; }
-    
-    /* Mobile par progress bars ko thoda bada karein taaki readablity achi ho */
-    .progress-bg { height: 10px; }
-    .exp-header { flex-direction: column; align-items: flex-start; }
+/* Hover Animation for Logo */
+.exp-item:hover .company-logo-box {
+    transform: scale(1.2) rotate(5deg);
+    background: var(--slot-gold);
+    box-shadow: 0 0 25px var(--slot-gold);
+    color: #000;
 }
+
+
+
+
+
+
+
 
 
 .input-group {
@@ -933,37 +1031,33 @@ textarea.form-input {
 
 
 
-
-
-
-
-
-
-
-
+/* education.js se linked modal-body ko target karein */
 .education-body {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 30px;
+    gap: 12px; /* Gap kam kiya */
+    padding: 20px; /* Padding kam ki */
+}
+
+/* Modal Content specific to Education */
+#educationModal .modal-content {
+    max-height: 85vh; /* Maximum height set ki */
+    overflow-y: auto; /* Agar content badhe to scroll ho */
 }
 
 .edu-item {
-    border-left: 3px solid var(--slot-gold);
-    padding-left: 20px;
-    background: rgba(255, 215, 0, 0.05);
-    padding: 15px;
-    border-radius: 0 10px 10px 0;
-    transition: 0.3s;
+    padding: 10px 15px; /* Compact padding */
+    margin-bottom: 5px;
 }
 
-.edu-item:hover {
-    background: rgba(255, 215, 0, 0.1);
-    transform: translateX(5px);
+.edu-item h3 {
+    font-size: 1.1rem; /* Font size thoda chota */
+    margin-bottom: 2px;
 }
 
-
-
+.edu-item .company-name {
+    font-size: 0.95rem;
+}
 
 
 
@@ -981,7 +1075,8 @@ textarea.form-input {
 /* --- MOBILE RESPONSIVE FIXES --- */
 @media (max-width: 768px) {
     header {
-        flex-direction: column-reverse !important; /* Image upar, text niche */
+        flex-direction: column-reverse !important;
+        /* Image upar, text niche */
         padding-top: 60px !important;
         text-align: center;
         min-height: auto !important;
@@ -993,8 +1088,10 @@ textarea.form-input {
     }
 
     .hero-name {
-        font-size: 2.8rem !important; /* Font size chota kiya */
-        white-space: normal !important; /* Name wrap ho sake */
+        font-size: 2.8rem !important;
+        /* Font size chota kiya */
+        white-space: normal !important;
+        /* Name wrap ho sake */
         line-height: 1.2;
     }
 
@@ -1017,12 +1114,15 @@ textarea.form-input {
     .modal-content {
         width: 95% !important;
         margin: 10% auto !important;
-        max-height: 85vh; /* Screen se bahar na jaye */
-        overflow-y: auto !important; /* Scroll enable kiya */
+        max-height: 85vh;
+        /* Screen se bahar na jaye */
+        overflow-y: auto !important;
+        /* Scroll enable kiya */
     }
 
     .modal-body {
-        grid-template-columns: 1fr !important; /* Skills/Edu ek line mein */
+        grid-template-columns: 1fr !important;
+        /* Skills/Edu ek line mein */
         padding: 15px !important;
     }
 
@@ -1035,7 +1135,8 @@ textarea.form-input {
     .btn {
         padding: 10px 20px !important;
         font-size: 0.9rem !important;
-        width: 100%; /* Mobile par full width buttons better lagte hain */
+        width: 100%;
+        /* Mobile par full width buttons better lagte hain */
     }
 
     /* Experience & Education list fix */
@@ -1048,8 +1149,14 @@ textarea.form-input {
 
 /* Landscape/Tablet Fix */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .hero-name { font-size: 4rem !important; }
-    .profile-pic { width: 280px !important; height: 280px !important; }
+    .hero-name {
+        font-size: 4rem !important;
+    }
+
+    .profile-pic {
+        width: 280px !important;
+        height: 280px !important;
+    }
 }
 
 
@@ -1061,14 +1168,26 @@ textarea.form-input {
 
 
 
+/* style.css mein Confetti style ke liye add karein */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    z-index: 11000;
+    pointer-events: none;
+}
 
-
-
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.5);
+}
 
 
 
 /* --- RESPONSIVE FIXES --- */
 @media (max-width: 768px) {
+
     /* Profile Image Container */
     .hero-img-container {
         flex: 0 0 auto !important;
@@ -1086,6 +1205,7 @@ textarea.form-input {
         width: clamp(220px, 55vw, 320px) !important;
         height: clamp(220px, 55vw, 320px) !important;
     }
+
 
     /* Modal Responsiveness */
     .modal-content {
@@ -1107,4 +1227,146 @@ textarea.form-input {
         justify-content: space-around !important;
         margin-top: 10px;
     }
+}
+
+
+.glow-ring {
+    /* ... baki purana code ... */
+    transform-origin: center;
+    /* Yeh ensure karta hai ki center se ghume */
+    display: block;
+}
+
+
+.card-content p {
+    display: -webkit-box;
+    /*-webkit-line-clamp: 2;  Sirf 2 lines dikhegi 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+    min-height: 2.8em; /* Consistency ke liye */
+}
+
+.theme-panel button:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+    box-shadow: 0 0 10px currentColor;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Optimized Contact Modal */
+#contactModal .modal-content {
+    width: 95%;
+    max-width: 420px; /* Space kam kar di */
+    margin: 10vh auto;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+    #contactModal .modal-content {
+        margin: 5vh auto;
+        width: 90%;
+    }
+    .form-input {
+        font-size: 16px; /* Mobile par zoom issues se bachne ke liye */
+    }
+}
+
+/* game.js aur main.js ke z-index ko PixiJS se upar rakho */
+#gameCanvas {
+    position: relative !important;
+    z-index: 20000 !important; /* PixiJS background se double priority */
+    background-color: #111 !important;
+    cursor: crosshair !important;
+    pointer-events: auto !important; /* Click interaction enable karega */
+}
+
+/* Modal wrapper ko bhi lift karo */
+.game-wrapper {
+    position: relative !important;
+    z-index: 20001 !important;
+}
+
+/* Ensure the game UI always sits above the background and accepts clicks */
+/* #gameCanvas {
+    position: relative !important;
+    z-index: 20005 !important;
+    pointer-events: auto !important; 
+    touch-action: none;
+} */
+
+
+#bg-canvas {
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+#bg-canvas {
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+
+#gameCanvas {
+    position: relative !important;
+    z-index: 20000 !important;
+    pointer-events: auto !important; 
+}
+/* style.css ke end mein ye add karein */
+#successModal .modal-content {
+    background: #000 !important;
+    border: 2px solid var(--slot-gold) !important;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+/* style.css mein successModal ka section isse update karein */
+#successModal .modal-content {
+    max-width: 450px;
+    text-align: center;
+    border: 2px solid var(--slot-gold);
+    background: #000;
+    position: relative;
+    overflow: hidden; /* Content ko bahar nikalne se rokega */
+    margin: 10vh auto; /* Screen ke beech mein rakhega */
+}
+.toast.show { 
+    bottom: 30px !important; 
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+#gameCanvas {
+    max-width: 100% !important; /* Mobile par screen se bahar nahi jayega */
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid var(--neon-blue); /* Thoda border taaki edge saaf dikhe */
+}
+/* rtp_achieventstyle.css ya style.css mein */
+.toast {
+    position: fixed;
+    bottom: -150px; /* Thoda aur niche hide karein */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999999;
+    /* Baki properties same rahegi */
+}
+
+.toast.show {
+    bottom: 30px !important; /* Screen ke andar lane ke liye */
+}
+
+/* style.css mein add karein */
+body.modal-open {
+    overflow: hidden;
+    padding-right: 0px; /* Layout shift rokne ke liye */
 }

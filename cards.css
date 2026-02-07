@@ -1,0 +1,70 @@
+/* cards.css */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    align-items: stretch;
+}
+
+.card {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    border-color: var(--neon-blue);
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+}
+
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.game-desc {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    min-height: 4.5em; /* Padding consistency ke liye */
+}
+
+.mini-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.mini-features span {
+    font-size: 0.7rem;
+    background: rgba(0, 242, 254, 0.1);
+    color: var(--neon-blue);
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+.tags-container {
+    margin-top: auto; /* Isse tech tags hamesha card ke bottom par rahenge */
+    padding-top: 15px;
+    border-top: 1px solid #222;
+}
+
+.card-content p {
+    display: block;        /* Normal text display */
+    overflow: visible;     /* Poora text dikhega */
+    height: auto;          /* Height text ke hisab se badhegi */
+    min-height: 4.5em;     /* Alignment barabar rakhne ke liye */
+    margin-bottom: 15px;   /* Neeche space ke liye */
+    line-height: 1.5;      /* Reading mein aasaani ke liye */
+    color: #ccc;           /* Professional gray color */
+}
