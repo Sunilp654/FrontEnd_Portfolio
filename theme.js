@@ -341,3 +341,72 @@ const CustomDropdownTable = ({ companylist, onSelect }) => {
 };
 
 export default CustomDropdownTable;
+
+
+
+
+-----------------------------------------------------------------------------------
+
+
+
+    import { useState } from "react";
+import CustomDropdownTable from "./CustomDropdownTable";
+import ActivityCustomSelect from "./ActivityCustomSelect";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Col, Row, Container } from "react-bootstrap";
+
+function App() {
+  const initialData = [
+    {
+      activityId: 1,
+      activityName: "PRIME CONTRACT AWARD",
+      assignedCompanies: [],
+      startDate: "2026-01-16T08:00:00",
+      endDate: "2026-01-26T17:00:00",
+      status: "Not Assigned",
+    },
+    {
+      activityId: 2,
+      activityName: "Prime Contractor Selected",
+      assignedCompanies: [
+        { companyId: 3, companyName: "testing2" },
+        { companyId: 5, companyName: "Strafford Construction Group" }
+      ],
+      startDate: "2026-01-16T08:00:00",
+      endDate: "2026-01-16T17:00:00",
+      status: "Assigned",
+    },
+  ];
+
+  const companylist = [
+    { companyId: 2, companyName: "contractar" },
+    { companyId: 3, companyName: "testing2" },
+    { companyId: 5, companyName: "Strafford Construction Group" },
+  ];
+
+  const [activities, setActivities] = useState(initialData);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  return (
+    <Container fluid>
+      <Row>
+        <Col md={6}>
+          <CustomDropdownTable
+            companylist={companylist}
+            onSelect={setSelectedCompany}
+          />
+        </Col>
+
+        <Col md={6}>
+          <ActivityCustomSelect
+            data={activities}
+            setData={setActivities}
+            selectedCompany={selectedCompany}
+          />
+        </Col>
+      </Row>
+    </Container>
+  );
+}
+
+export default App;
