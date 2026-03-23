@@ -354,3 +354,56 @@ const ActivityCustomSelect = ({ data, setData, selectedCompany }) => {
 };
 
 export default ActivityCustomSelect;
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+
+
+
+
+
+
+import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+
+const CustomDropdownTable = ({ companylist, onSelect }) => {
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const handleChange = (e) => {
+    const companyId = Number(e.target.value);
+
+    const selected = companylist.find(
+      (c) => c.companyId === companyId
+    );
+
+    setSelectedCompany(selected);
+    onSelect && onSelect(selected);
+  };
+
+  return (
+    <Form.Select
+      value={selectedCompany?.companyId || ""}
+      onChange={handleChange}
+    >
+      <option value="">Select Company</option>
+
+      {companylist.map((company) => (
+        <option key={company.companyId} value={company.companyId}>
+          {company.companyName}
+        </option>
+      ))}
+    </Form.Select>
+  );
+};
+
+export default CustomDropdownTable;
+
