@@ -33,327 +33,9 @@ window.initParticles = function(mode) {
 };
 
 
-
-
-
-
--------------------------------------------------------------------------------------------------------------------------------
-
-import React, { useState, useRef, useEffect, useMemo } from "react";
-import { useFormik } from "formik";
-import { InputText } from "primereact/inputtext";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Button } from "react-bootstrap";
-
-import "primereact/resources/themes/lara-light-blue/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
-
-const ActivityCustomSelect = ({ data, setData, selectedCompany }) => {
-  const [open, setOpen] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const containerRef = useRef(null);
-
-  const formik = useFormik({
-    initialValues: { activities: [] },
-    validate: (values) => {
-      const errors = {};
-      if (!values.activities.length) {
-        errors.activities = "Select at least one activity";
-      }
-      return errors;
-    },
-    onSubmit: (values) => {
-      if (!selectedCompany) {
-        alert("Select company first");
-        return;
-      }
-
-      setData((prev) =>
-        prev.map((activity) => {
-          const isSelected = values.activities.some(
-            (a) => a.activityId === activity.activityId
-          );
-
-          if (!isSelected) return activity;
-
-          const exists = activity.assignedCompanies.some(
-            (c) => c.companyId === selectedCompany.companyId
-          );
-
-          return {
-            ...activity,
-            assignedCompanies: exists
-              ? activity.assignedCompanies
-              : [...activity.assignedCompanies, selectedCompany],
-            status: "Assigned",
-          };
-        })
-      );
-    },
-  });
-
-  // ✅ Keep selection synced with latest data reference
-  const selectedRows = data.filter((d) =>
-    formik.values.activities.some(
-      (s) => s.activityId === d.activityId
-    )
-  );
-
-  // ✅ Auto-select rows when company changes
-  useEffect(() => {
-    if (!selectedCompany) {
-      formik.setFieldValue("activities", []);
-      return;
-    }
-
-    const selectedIds = new Set(
-      data
-        .filter((activity) =>
-          activity.assignedCompanies.some(
-            (c) => c.companyId === selectedCompany.companyId
-          )
-        )
-        .map((a) => a.activityId)
-    );
-
-    const matchedRows = data.filter((d) =>
-      selectedIds.has(d.activityId)
-    );
-
-    formik.setFieldValue("activities", matchedRows);
-  }, [selectedCompany, data]);
-
-  // outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    if (!open) setGlobalFilter("");
-  }, [open]);
-
-  // format date
-  const formatDate = (date) => {
-    if (!date) return "—";
-    const d = new Date(date);
-    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-  };
-
-  const assignedCompaniesTemplate = (row) =>
-    row.assignedCompanies?.length
-      ? row.assignedCompanies.map((c) => c.companyName).join(", ")
-      : "—";
-
-  // ✅ FULL COLUMN SEARCH (optimized)
-  const filteredData = useMemo(() => {
-    const search = globalFilter.toLowerCase();
-
-    return data.filter((item) => {
-      const activityId = item.activityId?.toString() || "";
-      const activityName = item.activityName?.toLowerCase() || "";
-      const status = item.status?.toLowerCase() || "";
-
-      const companies = item.assignedCompanies?.length
-        ? item.assignedCompanies
-            .map((c) => c.companyName.toLowerCase())
-            .join(" ")
-        : "";
-
-      const startDate = item.startDate
-        ? formatDate(item.startDate).toLowerCase()
-        : "";
-
-      const endDate = item.endDate
-        ? formatDate(item.endDate).toLowerCase()
-        : "";
-
-      return (
-        activityId.includes(search) ||
-        activityName.includes(search) ||
-        status.includes(search) ||
-        companies.includes(search) ||
-        startDate.includes(search) ||
-        endDate.includes(search)
-      );
-    });
-  }, [data, globalFilter]);
-
-  // select all logic
-  const isAllSelected =
-    filteredData.length > 0 &&
-    filteredData.every((item) =>
-      selectedRows.some((s) => s.activityId === item.activityId)
-    );
-
-  const handleSelectAll = (checked) => {
-    let newSelection;
-
-    if (checked) {
-      const ids = new Set([
-        ...selectedRows.map((s) => s.activityId),
-        ...filteredData.map((f) => f.activityId),
-      ]);
-
-      newSelection = data.filter((d) => ids.has(d.activityId));
-    } else {
-      newSelection = selectedRows.filter(
-        (s) =>
-          !filteredData.some((f) => f.activityId === s.activityId)
-      );
-    }
-
-    formik.setFieldValue("activities", newSelection);
-  };
-
-  return (
-    <form onSubmit={formik.handleSubmit}>
-      <div ref={containerRef} style={{ position: "relative" }}>
-        
-        {/* Dropdown */}
-        <div
-          className="form-select"
-          onClick={() => setOpen((prev) => !prev)}
-        >
-          {selectedRows.length
-            ? selectedRows.map((r) => r.activityName).join(", ")
-            : "Select Activities"}
-        </div>
-
-        {formik.errors.activities && (
-          <div className="text-danger">{formik.errors.activities}</div>
-        )}
-
-        {/* Panel */}
-        {open && (
-          <div style={{ border: "1px solid #ccc", padding: 10 }}>
-            
-            {/* Search */}
-            <InputText
-              value={globalFilter}
-              onChange={(e) => setGlobalFilter(e.target.value)}
-              placeholder="Search..."
-              style={{ width: "100%", marginBottom: 10 }}
-            />
-
-            {/* Select All + Count */}
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div>
-                <input
-                  type="checkbox"
-                  checked={isAllSelected}
-                  onChange={(e) => handleSelectAll(e.target.checked)}
-                />{" "}
-                Select All
-              </div>
-
-              <div>{selectedRows.length} selected</div>
-            </div>
-
-            {/* Table */}
-            <DataTable
-              value={filteredData}
-              selection={selectedRows}
-              onSelectionChange={(e) => {
-                const ids = new Set(e.value.map((v) => v.activityId));
-                const updated = data.filter((d) =>
-                  ids.has(d.activityId)
-                );
-                formik.setFieldValue("activities", updated);
-              }}
-              dataKey="activityId"
-            >
-              <Column selectionMode="multiple" />
-              <Column field="activityId" header="ID" />
-              <Column field="activityName" header="Activity Name" />
-              <Column header="Companies" body={assignedCompaniesTemplate} />
-              <Column header="Start" body={(row) => formatDate(row.startDate)} />
-              <Column header="End" body={(row) => formatDate(row.endDate)} />
-            </DataTable>
-          </div>
-        )}
-      </div>
-
-      <Button type="submit" className="mt-2">
-        Assign Activity
-      </Button>
-    </form>
-  );
-};
-
-export default ActivityCustomSelect;
-
-
-
-
-
-
-
-
-
-
-
------------------------------------------------------------------------------
-
-
-
-
-
-
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
-
-const CustomDropdownTable = ({ companylist, onSelect }) => {
-  const [selectedCompany, setSelectedCompany] = useState(null);
-
-  const handleChange = (e) => {
-    const companyId = Number(e.target.value);
-
-    const selected = companylist.find(
-      (c) => c.companyId === companyId
-    );
-
-    setSelectedCompany(selected);
-    onSelect && onSelect(selected);
-  };
-
-  return (
-    <Form.Select
-      value={selectedCompany?.companyId || ""}
-      onChange={handleChange}
-    >
-      <option value="">Select Company</option>
-
-      {companylist.map((company) => (
-        <option key={company.companyId} value={company.companyId}>
-          {company.companyName}
-        </option>
-      ))}
-    </Form.Select>
-  );
-};
-
-export default CustomDropdownTable;
-
-
-
-
------------------------------------------------------------------------------------
-
-
-
-    import { useState } from "react";
-import CustomDropdownTable from "./CustomDropdownTable";
-import ActivityCustomSelect from "./ActivityCustomSelect";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Col, Row, Container } from "react-bootstrap";
+import { Col, Row, Container, Button } from "react-bootstrap";
 
 function App() {
   const initialData = [
@@ -368,12 +50,17 @@ function App() {
     {
       activityId: 2,
       activityName: "Prime Contractor Selected",
-      assignedCompanies: [
-        { companyId: 3, companyName: "testing2" },
-        { companyId: 5, companyName: "Strafford Construction Group" }
-      ],
+      assignedCompanies: ["testing2", "Strafford Construction Group"],
       startDate: "2026-01-16T08:00:00",
       endDate: "2026-01-16T17:00:00",
+      status: "Assigned",
+    },
+    {
+      activityId: 3,
+      activityName: "Prime",
+      assignedCompanies: ["testing2", "contractar"],
+      startDate: "2026-01-17T08:00:00",
+      endDate: "2026-01-17T17:00:00",
       status: "Assigned",
     },
   ];
@@ -385,24 +72,338 @@ function App() {
   ];
 
   const [activities, setActivities] = useState(initialData);
-  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [selectedCompany, setSelectedCompany] = useState("");
+  const [selectedActivities, setSelectedActivities] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [errors, setErrors] = useState({
+    company: "",
+    activity: "",
+  });
+
+  const ref = useRef();
+
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-GB");
+
+  const getCompanyName = (id) =>
+    companylist.find((c) => c.companyId == id)?.companyName;
+
+  // Close dropdown
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+        setSearch("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Filter
+  const filteredData = useMemo(() => {
+    const term = search.toLowerCase();
+
+    return activities.filter((item) => {
+      const combined = [
+        item.activityId,
+        item.activityName,
+        item.status,
+        formatDate(item.startDate),
+        formatDate(item.endDate),
+        item.assignedCompanies.join(" "),
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return combined.includes(term);
+    });
+  }, [search, activities]);
+
+  // Toggle checkbox
+  const handleToggle = (item) => {
+    setSelectedActivities((prev) => {
+      const exists = prev.find(
+        (i) => i.activityId === item.activityId
+      );
+      if (exists) {
+        return prev.filter(
+          (i) => i.activityId !== item.activityId
+        );
+      } else {
+        return [...prev, item];
+      }
+    });
+
+    setErrors((prev) => ({ ...prev, activity: "" }));
+  };
+
+  // Select all
+  const isAllSelected =
+    filteredData.length > 0 &&
+    filteredData.every((item) =>
+      selectedActivities.some(
+        (i) => i.activityId === item.activityId
+      )
+    );
+
+  const handleSelectAll = (checked) => {
+    if (checked) {
+      const newItems = filteredData.filter(
+        (item) =>
+          !selectedActivities.some(
+            (i) => i.activityId === item.activityId
+          )
+      );
+      setSelectedActivities((prev) => [...prev, ...newItems]);
+    } else {
+      setSelectedActivities((prev) =>
+        prev.filter(
+          (i) =>
+            !filteredData.some(
+              (f) => f.activityId === i.activityId
+            )
+        )
+      );
+    }
+  };
+
+  // Company change
+  const handleCompanyChange = (e) => {
+    const value = e.target.value;
+    setSelectedCompany(value);
+    setErrors((prev) => ({ ...prev, company: "" }));
+
+    if (value) {
+      const companyName = getCompanyName(value);
+
+      const matched = activities.filter((item) =>
+        item.assignedCompanies.includes(companyName)
+      );
+
+      setSelectedActivities(matched);
+    } else {
+      setSelectedActivities([]);
+    }
+  };
+
+  // Submit
+  const handleAssign = () => {
+    let newErrors = { company: "", activity: "" };
+
+    if (!selectedCompany) {
+      newErrors.company = "Please select a company";
+    }
+
+    if (!selectedActivities.length) {
+      newErrors.activity = "Please select at least one activity";
+    }
+
+    setErrors(newErrors);
+
+    if (newErrors.company || newErrors.activity) return;
+
+    const companyName = getCompanyName(selectedCompany);
+
+    // Payload
+    const assignActivity = {
+      companyId: Number(selectedCompany),
+      activityIds: selectedActivities.map((a) => a.activityId),
+    };
+
+    console.log("Payload:", assignActivity);
+
+    // Update UI
+    const updatedActivities = activities.map((act) => {
+      if (
+        selectedActivities.some(
+          (a) => a.activityId === act.activityId
+        )
+      ) {
+        const alreadyExists =
+          act.assignedCompanies.includes(companyName);
+
+        return {
+          ...act,
+          assignedCompanies: alreadyExists
+            ? act.assignedCompanies
+            : [...act.assignedCompanies, companyName],
+          status: "Assigned",
+        };
+      }
+      return act;
+    });
+
+    setActivities(updatedActivities);
+  };
 
   return (
-    <Container fluid>
+    <Container fluid className="mt-3">
       <Row>
-        <Col md={6}>
-          <CustomDropdownTable
-            companylist={companylist}
-            onSelect={setSelectedCompany}
-          />
+        {/* Company */}
+        <Col md={12} className="mb-3">
+          <select
+            className={`form-select ${
+              errors.company ? "is-invalid" : ""
+            }`}
+            value={selectedCompany}
+            onChange={handleCompanyChange}
+          >
+            <option value="">Select Company</option>
+            {companylist.map((c) => (
+              <option key={c.companyId} value={c.companyId}>
+                {c.companyName}
+              </option>
+            ))}
+          </select>
+          {errors.company && (
+            <div className="invalid-feedback d-block">
+              {errors.company}
+            </div>
+          )}
         </Col>
 
-        <Col md={6}>
-          <ActivityCustomSelect
-            data={activities}
-            setData={setActivities}
-            selectedCompany={selectedCompany}
-          />
+        {/* Activity dropdown */}
+        <Col md={9}>
+          <div className="position-relative" ref={ref}>
+            <div
+              className={`form-control d-flex justify-content-between ${
+                errors.activity ? "border-danger" : ""
+              }`}
+              onClick={() => setOpen(!open)}
+              style={{ cursor: "pointer" }}
+            >
+              <span>
+                {selectedActivities.length
+                  ? selectedActivities
+                      .map((a) => a.activityName)
+                      .join(", ")
+                  : "Select Activities"}
+              </span>
+              ▼
+            </div>
+
+            {open && (
+              <div className="position-absolute bg-white border w-100 mt-1 shadow">
+                <div className="p-2 border-bottom">
+                  <input
+                    className="form-control"
+                    placeholder="Search..."
+                    value={search}
+                    onChange={(e) =>
+                      setSearch(e.target.value)
+                    }
+                  />
+                </div>
+
+                <div style={{ maxHeight: 300, overflowY: "auto" }}>
+                  <table className="table table-hover mb-0">
+                    <thead>
+                      <tr>
+                        <th>
+                          <input
+                            type="checkbox"
+                            checked={isAllSelected}
+                            onChange={(e) =>
+                              handleSelectAll(e.target.checked)
+                            }
+                          />
+                        </th>
+                        <th colSpan="6">
+                          <div className="d-flex justify-content-between">
+                            <span>Select All</span>
+                            <span>
+                              {selectedActivities.length} selected
+                            </span>
+                          </div>
+                        </th>
+                      </tr>
+
+                      <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Companies</th>
+                        <th>Start</th>
+                        <th>End</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {filteredData.length ? (
+                        filteredData.map((item) => {
+                          const checked =
+                            selectedActivities.some(
+                              (i) =>
+                                i.activityId === item.activityId
+                            );
+
+                          return (
+                            <tr key={item.activityId}>
+                              <td>
+                                <input
+                                  type="checkbox"
+                                  checked={checked}
+                                  onChange={() =>
+                                    handleToggle(item)
+                                  }
+                                />
+                              </td>
+                              <td>{item.activityId}</td>
+                              <td
+                                onClick={() =>
+                                  handleToggle(item)
+                                }
+                                style={{ cursor: "pointer" }}
+                              >
+                                {item.activityName}
+                              </td>
+                              <td>{item.status}</td>
+                              <td>
+                                {item.assignedCompanies.join(
+                                  ", "
+                                ) || "—"}
+                              </td>
+                              <td>
+                                {formatDate(
+                                  item.startDate
+                                )}
+                              </td>
+                              <td>
+                                {formatDate(item.endDate)}
+                              </td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr>
+                          <td colSpan="7" className="text-center">
+                            No data found
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {errors.activity && (
+            <div className="text-danger mt-1">
+              {errors.activity}
+            </div>
+          )}
+        </Col>
+
+        {/* Button */}
+        <Col md={3}>
+          <Button onClick={handleAssign}>
+            Assign Activity
+          </Button>
         </Col>
       </Row>
     </Container>
