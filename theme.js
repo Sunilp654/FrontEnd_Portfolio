@@ -32,6 +32,7 @@ window.initParticles = function(mode) {
     if(typeof originalInitParticles === 'function') originalInitParticles(mode);
 };
 
+//-----------------------------------------------------------------------------------------
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
